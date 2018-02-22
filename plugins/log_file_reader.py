@@ -39,3 +39,10 @@ class LogLineGenerator:
             quotechar='"')
             for line in reader:
                 yield line
+
+    def main():
+        plugin_manager = PluginManager()
+        log_generator = LogLineGenerator()
+        for log_line in log_generator.get_loglines():
+            plugin_manager.call_method('process', args=log_line)
+        plugin_manager.call_method('report')
